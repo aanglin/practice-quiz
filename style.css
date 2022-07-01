@@ -33,7 +33,11 @@
   padding: 10px;
   margin-bottom: 5px;
 }
-
+#test{
+  color: goldenrod;
+  font-size: 100px;
+  text-align-last: center;
+}
 
   #Submit-Score{
     background-color: goldenrod;
