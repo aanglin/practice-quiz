@@ -12,6 +12,8 @@ let questionCount;
 let scoreCount = 0;
 let count = 31;
 let countdown;
+let submitBtn= document.getElementById("Submit-Score")
+let scoreName = document.getElementById("scoreName")
 
 //Questions and Options array
 
@@ -26,13 +28,25 @@ const quizArray = [
     id: "1",
     question: "The condition in an if / else statement is enclosed within .?",
     options: ["quotes", "curly brackets", "parentheses", "square brackets"],
-    correct: "Europe",
+    correct: "parentheses",
   },
   {
     id: "2",
-    question: "Who invented Computer?",
-    options: ["Charles Babbage", "Henry Luce", "Henry Babbage", "Charles Luce"],
-    correct: "Charles Babbage",
+    question: "Arrays in JavaScript can be used to store .",
+    options: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+    correct: "all of the above",
+  },
+  {
+    id: "3",
+    question: "String values must be enclosed within __ when being assigned to variables.?",
+    options: ["commas", "curly brackets", "quotes", "parentheses"],
+    correct: "quotes",
+  },
+  {
+    id: "4",
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:?",
+    options: ["JavaScript", "terminal / bash", "for loops", "console.log"],
+    correct: "console.log",
   },
 ];
 
@@ -63,7 +77,7 @@ nextBtn.addEventListener(
         questionCount + 1 + " of " + quizArray.length + " Question";
       //display quiz
       quizDisplay(questionCount);
-      count = 31;
+      // count = 31;
       clearInterval(countdown);
       timerDisplay();
     }
@@ -76,24 +90,16 @@ const timerDisplay = () => {
     count--;
     timeLeft.innerHTML = `${count}s`;
     if (count == 0) {
-      clearInterval(countdown);
+       clearInterval(countdown);
       displayNext();
       if (options!== correct){
         console.log("wrong")
       }
     }
-  }, 1000);
+  }, 750);
 
 };  
 
-// const timerDisplay =() => {
-//   countdown = setInterval(()=> {
-//     count--;
-    
-//   }, 1000 )
-  
-  
-// }  
 
 
 //Display quiz
@@ -148,6 +154,8 @@ function checker(userOption) {
     userOption.classList.add("correct");
     scoreCount++;
   } else {
+    count = count-5
+    timeLeft.textContent=count
     userOption.classList.add("incorrect");
     if (userOption.innerText !== quizArray[questionCount].correct) { console.log("Wrong"); }
     //For marking the correct option
@@ -171,13 +179,24 @@ function initial() {
   quizContainer.innerHTML = "";
   questionCount = 0;
   scoreCount = 0;
-  count = 11;
+  count = 31;
   clearInterval(countdown);
   timerDisplay();
   quizCreator();
   quizDisplay(questionCount);
 }
+function saveScore(){
+  let newScore = {userName: scoreName.value, score: scoreCount}
 
+let scoreArray = JSON.parse(localStorage.getItem("gameScore"))|| []
+
+
+scoreArray.push(newScore)
+
+localStorage.setItem("gameScore", JSON.stringify(scoreArray))
+}
+
+submitBtn.onclick=saveScore
 //when user click on start button
 startButton.addEventListener("click", () => {
   startScreen.classList.add("hide");
